@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <HelloWorld :msg="msg"/>
+        <HelloWorld :msg="msg" :body="body"/>
     </div>
 </template>
 
@@ -15,21 +15,34 @@ export default {
     data: function() {
         return {
             msg: String,
-            errors: []
+            body: String,
         }
     },
     created: function() {
-        this.login()
+        this.hello()
+        this.bodyCall()
     },
     methods: {
-        login: function() {
+        async hello() {
+            this.msg = 'Loading message...'
+
             this.api.auth.hello()
             .then(response => {
-                this.msg = response.data;
+                this.msg = response.data
             })
-            .catch(e => {
-                console.log(e);
-                this.msg = 'Error, the API failed to say hello.';
+            .catch(function() {
+                this.msg = 'Error, the API failed to say hello.'
+            })
+        },
+        async bodyCall() {
+            this.body = 'Loading body...'
+
+            this.api.auth.hello()
+            .then(response => {
+                this.body = response.data
+            })
+            .catch(function() {
+                this.body = 'Error, the API failed to say hello.'
             })
         }
     }

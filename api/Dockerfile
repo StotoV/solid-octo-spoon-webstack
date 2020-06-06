@@ -1,9 +1,11 @@
 FROM python:3.8.3-buster
 
-COPY . /app
-WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends netcat
+
+COPY . /api
+WORKDIR /api
 
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
-CMD ["uwsgi", "app.ini"]
+ENTRYPOINT ["/bin/sh", "/api/entrypoint.sh"]
