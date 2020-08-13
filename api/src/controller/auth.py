@@ -22,12 +22,12 @@ def login():
     password = request.form['password']
 
     try:
-        response = Auth().authenticate(email, password)
+        response = Auth.authenticate(email, password)
         return response.serialize(), status.HTTP_200_OK
     except Unauthorized as e:
         return json.dumps(str(e)), status.HTTP_401_UNAUTHORIZED
 
-@authBlueprint.route('/hello')
+@authBlueprint.route('/hello', methods=['GET'])
 @jwt_required
 def hello():
     logger.debug('Request: /hello')

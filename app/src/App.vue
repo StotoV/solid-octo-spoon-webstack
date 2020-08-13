@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        Main app this is
         <HelloWorld :msg="msg" :body="body"/>
     </div>
 </template>

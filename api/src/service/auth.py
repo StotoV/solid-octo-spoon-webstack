@@ -18,13 +18,14 @@ class Auth:
     Handles the logic for the authentication and authorization
     '''
 
-    def authenticate(self, email, password):
+    @classmethod
+    def authenticate(cls, email, password):
         try:
             logger.debug('Authenticating user')
 
             # Query user
             user = User.query.filter(User.email == email).one()
-            token = self.issue_token([user.id, user.email])
+            token = cls.issue_token([user.id, user.email])
 
             if not check_password_hash(user.password, password):
                 logger.debug('Invalid password')
@@ -33,8 +34,8 @@ class Auth:
             logger.debug('User %s succesfully authenticated', user.email)
             return UserDTO.complete(user.email, token, user.first_name)
         except MultipleResultsFound:
-            logger.error('Multiple accounts for credential, database corrupted')
-            raise Unauthorized('Account corrupted, contact technical support')
+            logger.error('Multiple accounts for credential, database corrupt')
+            raise Unauthorized('Account corrupt, contact technical support')
         except NoResultFound:
             logger.debug('Invalid credentials')
             raise Unauthorized('Invalid credentials')

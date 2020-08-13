@@ -1,8 +1,11 @@
 import Vue from 'vue'
-import App from './App.vue'
+import router from './router.js'
 import Factory from './api/factory.js'
+import Axios from 'axios'
+import './assets/css/styles.css'
 
 Vue.config.productionTip = false
+Vue.prototype.$http = Axios;
 
 // Load the API
 Vue.mixin({
@@ -15,5 +18,5 @@ Vue.mixin({
 
 new Vue({
     el: '#app',
-    render: h => h(App),
+    router
 })
