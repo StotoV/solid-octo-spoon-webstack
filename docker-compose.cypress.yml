@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  cypress:
+    image: cypress/included:4.12.1
+    command: cypress run
+    depends_on:
+      - vue
+    env_file: ./e2e/cypress.env
+    working_dir: /e2e
+    volumes:
+      - ./e2e:/e2e
